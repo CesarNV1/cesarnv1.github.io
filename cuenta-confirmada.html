@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cuenta confirmada · Nigenda Shiori</title>
+  <style>
+    :root {
+      --bg-top: #0b1020;
+      --bg-bottom: #111827;
+      --card-bg: rgba(20, 27, 45, 0.92);
+      --card-border: rgba(148, 163, 184, 0.16);
+      --text-main: #f8fafc;
+      --text-muted: #cbd5e1;
+      --text-soft: #94a3b8;
+      --accent-ok: #10b981;
+      --accent-ok-bg: rgba(16, 185, 129, 0.14);
+      --accent-ok-border: rgba(16, 185, 129, 0.35);
+      --accent-warn: #f59e0b;
+      --accent-warn-bg: rgba(245, 158, 11, 0.14);
+      --accent-warn-border: rgba(245, 158, 11, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.18), transparent 45%),
+        radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.14), transparent 45%),
+        linear-gradient(160deg, var(--bg-top), var(--bg-bottom));
+    }
+
+    .card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 36px 28px 28px;
+      text-align: center;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(12px);
+    }
+
+    .icon-wrap {
+      width: 76px;
+      height: 76px;
+      margin: 0 auto 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-ok-bg);
+      border: 1px solid var(--accent-ok-border);
+      color: var(--accent-ok);
+    }
+
+    .card.is-warning .icon-wrap {
+      background: var(--accent-warn-bg);
+      border-color: var(--accent-warn-border);
+      color: var(--accent-warn);
+    }
+
+    .icon-wrap svg {
+      width: 38px;
+      height: 38px;
+      display: block;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+      color: #6ee7b7;
+      background: var(--accent-ok-bg);
+      border: 1px solid var(--accent-ok-border);
+    }
+
+    .card.is-warning .badge {
+      color: #fcd34d;
+      background: var(--accent-warn-bg);
+      border-color: var(--accent-warn-border);
+    }
+
+    h1 {
+      font-size: 28px;
+      line-height: 1.2;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 16px;
+    }
+
+    .message {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .hint-box {
+      background: rgba(15, 23, 42, 0.72);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--text-soft);
+    }
+
+    .footer {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(148, 163, 184, 0.12);
+      font-size: 12px;
+      color: var(--text-soft);
+      letter-spacing: 0.02em;
+    }
+  </style>
+</head>
+<body>
+  <main class="card" id="status-card">
+    <div class="icon-wrap" id="status-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6L9 17l-5-5" />
+      </svg>
+    </div>
+
+    <div class="badge" id="status-badge">Cuenta verificada</div>
+    <h1 id="status-title">¡Felicidades!</h1>
+    <p class="subtitle" id="status-subtitle">Tu cuenta en Nigenda Shiori fue verificada</p>
+    <p class="message" id="status-message">
+      Tu correo electrónico se confirmó con éxito. Ya puedes cerrar esta pestaña, volver a la app Nigenda Shiori e iniciar sesión para respaldar tu biblioteca de anime, manga y manhwa en la nube.
+    </p>
+
+    <div class="hint-box" id="status-hint">
+      Abre Nigenda Shiori en tu teléfono e ingresa con tu correo y contraseña para activar tu respaldo en la nube.
+    </div>
+
+    <footer class="footer">Nigenda Studios · Nigenda Shiori</footer>
+  </main>
+
+  <script>
+    (function () {
+      var searchParams = new URLSearchParams(window.location.search || "");
+      var rawHash = (window.location.hash || "").replace(/^#/, "");
+      var hashParams = new URLSearchParams(rawHash);
+
+      var error = searchParams.get("error") || hashParams.get("error");
+      var errorCode = searchParams.get("error_code") || hashParams.get("error_code");
+      var errorDesc = searchParams.get("error_description") || hashParams.get("error_description");
+
+      if (error || errorCode || errorDesc) {
+        var card = document.getElementById("status-card");
+        var icon = document.getElementById("status-icon");
+        var badge = document.getElementById("status-badge");
+        var title = document.getElementById("status-title");
+        var subtitle = document.getElementById("status-subtitle");
+        var message = document.getElementById("status-message");
+        var hint = document.getElementById("status-hint");
+
+        card.classList.add("is-warning");
+        icon.innerHTML =
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">' +
+          '<circle cx="12" cy="12" r="10"></circle>' +
+          '<line x1="12" y1="8" x2="12" y2="12"></line>' +
+          '<line x1="12" y1="16" x2="12.01" y2="16"></line>' +
+          "</svg>";
+        badge.textContent = "Enlace no disponible";
+        title.textContent = "Este enlace ya fue usado o caducó";
+        subtitle.textContent = "No te preocupes, puedes continuar desde la app";
+        message.textContent =
+          "El enlace de verificación ya expiró o se utilizó anteriormente. Si ya habías confirmado tu cuenta, vuelve a Nigenda Shiori e inicia sesión normalmente.";
+        hint.textContent =
+          "Si aún no puedes entrar, solicita un nuevo correo de confirmación desde la app Nigenda Shiori.";
+      }
+    })();
+  </script>
+</body>
+</html>
